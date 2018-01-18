@@ -85,13 +85,7 @@ browser.contextMenus.create({
   }, onCreated);
 
 function convert (value) {
-  browser.contextMenus.update(
-    "convert-selection",
-    {title: "BrewConvert"}
-  );
-
   value = value.trim();
-  console.log(value);
 
   kg_regex = /^\d+(\.\d+)\s?\b(kg)|\b(kilogram)/ig;
   lbs_regex =  /^\d+(\.\d+)\s?\b(lbs)|\b(pounds)|(lb)/ig;
@@ -132,6 +126,7 @@ function convert (value) {
   if (f_regex.test(value)) {
     return fToC(parseFloat(value));
   }
+  return "BrewConvert";
 }
 
 
