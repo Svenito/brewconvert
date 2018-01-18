@@ -85,19 +85,25 @@ browser.contextMenus.create({
   }, onCreated);
 
 function convert (value) {
+  browser.contextMenus.update(
+    "convert-selection",
+    {title: "BrewConvert"}
+  );
+
   value = value.trim();
   console.log(value);
-  kg_regex = /^\d+\s?\b(kg)|\b(kilogram)/ig;
-  lbs_regex =  /^\d+\s?\b(lbs)|\b(pounds)|(lb)/ig;
 
-  oz_regex = /^\d+\s?\b(oz)|\b(ounce)/ig;
-  g_regex = /^\d+\s?\b(g)|\b(gram)/ig;
+  kg_regex = /^\d+(\.\d+)\s?\b(kg)|\b(kilogram)/ig;
+  lbs_regex =  /^\d+(\.\d+)\s?\b(lbs)|\b(pounds)|(lb)/ig;
 
-  c_regex = /^\d+\s?\b(c)|\b(°c)/ig;
-  f_regex = /^\d+\s?\b(f)|\b(°f)/ig;
+  oz_regex = /^\d+(\.\d+)\s?\b(oz)|\b(ounce)/ig;
+  g_regex = /^\d+(\.\d+)\s?\b(g)|\b(gram)/ig;
 
-  gal_regex = /^\d+\s?\b(gal)|\b(gallon)/ig;
-  l_regex = /^\d+\s?\b(l)|(litre)|\b(liter)/ig;
+  c_regex = /^\d+(\.\d+)\s?\b(c)|\b(°c)/ig;
+  f_regex = /^\d+(\.\d+)\s?\b(f)|\b(°f)/ig;
+
+  gal_regex = /^\d+(\.\d+)\s?\b(gal)|\b(gallon)/ig;
+  l_regex = /^\d+(\.\d+)\s?\b(l)|(litre)|\b(liter)/ig;
 
   if (gal_regex.test(value)) {
     return galToL(parseFloat(value));
@@ -105,7 +111,6 @@ function convert (value) {
   if (l_regex.test(value)) {
     return lToGal(parseFloat(value));
   }
-
 
   if (lbs_regex.test(value)) {
     return lbsToKg(parseFloat(value));
