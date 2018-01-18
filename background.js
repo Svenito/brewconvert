@@ -10,7 +10,7 @@ function cToF(celsius)
 {
   var cTemp = celsius;
   var cToFahr = cTemp * 9 / 5 + 32;
-  var message = cTemp + '\xB0C -> ' + cToFahr + ' \xB0F';
+  var message = cTemp + '\xB0C -> ' + cToFahr.toFixed(3) + ' \xB0F';
   return message;
 }
 
@@ -18,11 +18,11 @@ function fToC(fahrenheit)
 {
   var fTemp = fahrenheit;
   var fToCel = (fTemp - 32) * 5 / 9;
-  var message = fTemp + '\xB0F -> ' + fToCel + '\xB0C';
+  var message = fTemp + '\xB0F -> ' + fToCel.toFixed(3) + '\xB0C';
   return message;
 }
 
-function gToL(gallons)
+function galToL(gallons)
 {
   var gal = gallons;
   var liters = gallons * 4.54609;
@@ -30,7 +30,7 @@ function gToL(gallons)
   return message;
 }
 
-function lToG(liters)
+function lToGal(liters)
 {
   var l = liters;
   var gal = liters / 4.54609;
@@ -58,7 +58,7 @@ function lbsToKg(pounds)
 {
   var lbs = pounds;
   var kg = lbs / 2.204623;
-  var message = lbs + ' lbs ->' + kg.toFixed(3) + ' kg';
+  var message = lbs + ' lbs -> ' + kg.toFixed(3) + ' kg';
     return message;
 }
 
@@ -66,7 +66,7 @@ function kgToLbs(kgs)
 {
   var kilos = kgs;
   var lbs = kilos * 2.204623;
-  var message = kilos + ' kg ->' + lbs.toFixed(3) + ' lbs';
+  var message = kilos + ' kg -> ' + lbs.toFixed(3) + ' lbs';
     return message;
 }
 
@@ -85,30 +85,48 @@ browser.contextMenus.create({
   }, onCreated);
 
 function convert (value) {
-      if (value.endsWith("F") || value.endsWith("°F")) {
-        return fToC(parseFloat(value));
-      } else if (value.endsWith("C") || value.endsWith("°C")) {
-        return cToF(parseFloat(value));
-      }
+  value = value.trim();
+  console.log(value);
+  kg_regex = /^\d+\s?\b(kg)|\b(kilogram)/ig;
+  lbs_regex =  /^\d+\s?\b(lbs)|\b(pounds)|(lb)/ig;
 
-      else if (value.endsWith("gallon") || value.endsWith("gal")) {
-        return gToL(parseFloat(value));
-      } else if (value.endsWith("liter") || value.endsWith("l")) {
-        return lToG(parseFloat(value));
-      }
+  oz_regex = /^\d+\s?\b(oz)|\b(ounce)/ig;
+  g_regex = /^\d+\s?\b(g)|\b(gram)/ig;
 
-      else if (value.endsWith("g") || value.endsWith("gram")) {
-        return gToOz(parseFloat(value));
-      } else if (value.endsWith("oz") || value.endsWith("ounce")) {
-        return ozToG(parseFloat(value));
-      }
+  c_regex = /^\d+\s?\b(c)|\b(°c)/ig;
+  f_regex = /^\d+\s?\b(f)|\b(°f)/ig;
 
-      else if (value.endsWith("lbs") || value.endsWith("pounds")) {
-        return lbsToKg(parseFloat(value));
-      } else if (value.endsWith("kg") || value.endsWith("kilograms")
-                || value.endsWith("kilos")) {
-        return kgToLbs(parseFloat(value));
-      }
+  gal_regex = /^\d+\s?\b(gal)|\b(gallon)/ig;
+  l_regex = /^\d+\s?\b(l)|(litre)|\b(liter)/ig;
 
+  if (gal_regex.test(value)) {
+    return galToL(parseFloat(value));
+  }
+  if (l_regex.test(value)) {
+    return lToGal(parseFloat(value));
+  }
+
+
+  if (lbs_regex.test(value)) {
+    return lbsToKg(parseFloat(value));
+  }
+  if (kg_regex.test(value)) {
+    return kgToLbs(parseFloat(value));
+  }
+
+  if (oz_regex.test(value)) {
+    return ozToG(parseFloat(value));
+  }
+  if (g_regex.test(value)) {
+    return gToOz(parseFloat(value));
+  }
+
+  if (c_regex.test(value)) {
+    return cToF(parseFloat(value));
+  }
+  if (f_regex.test(value)) {
+    return fToC(parseFloat(value));
+  }
 }
+
 
