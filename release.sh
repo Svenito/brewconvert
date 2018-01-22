@@ -13,8 +13,11 @@ cat common/convert.js >> dist/chrome/background.js
 cat common/convert.js >> dist/firefox/background.js
 
 # zip 'em up
-zip -r dist/brewconvert_chrome.zip dist/chrome
-zip -r dist/brewconvert_ff.zip dist/firefox
-
+cd dist/chrome
+zip -r ../brewconvert_chrome.zip *
+cd -
+cd dist/firefox
+zip -r ../brewconvert_ff.zip *
+cd -
 # done
 echo "Done"
