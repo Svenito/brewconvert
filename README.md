@@ -17,3 +17,18 @@ Currently known units:
 * liter <-> gallon (US)
 * Celcius <-> Fahrenheit
 
+Supported Browsers
+==================
+
+This tool is available on the relevant add-on/extension store for
+
+* [Firefox](https://addons.mozilla.org/en-GB/firefox/addon/brewconvert/)
+* [Chrome](https://chrome.google.com/webstore/detail/brew-convert/jcdkojonmmoljmglhlbampboocmemhfc)
+* [Opera](https://addons.opera.com/en/extensions/details/brew-convert/)
+
+License
+=======
+
+Published under the **Mozilla Public License 2.0**.
+
+See [LICENSE.txt](https://github.com/Svenito/brewconvert/blob/master/LICENSE.txt) for details or visit https://choosealicense.com/licenses/mpl-2.0/
