@@ -73,7 +73,7 @@ function convert(value) {
     lbs_regex =  /^\d+(\.\d+)?\s*\b(lbs)|\b(pounds)|(lb)/ig;
 
     oz_regex = /^\d+(\.\d+)?\s*\b(oz)|\b(ounce)/ig;
-    g_regex = /^\d+(\.\d+)?\s*\b(g)|\b(gram)/ig;
+    g_regex = /^\d+(\.\d+)?\s*\b(g$)|\b(gram)/ig;
 
     c_regex = /^\d+(\.\d+)?\s*\b(c)|\b(°c)/ig;
     f_regex = /^\d+(\.\d+)?\s*\b(f)|\b(°f)/ig;
@@ -99,6 +99,13 @@ function convert(value) {
     }
     if (f_regex.test(value)) {
         return [{"name": "ftoc", "value": fToC(parseFloat(value))}];
+    }
+
+    if (gal_regex.test(value)) {
+        return [{"name": "galtol", "value": galToL(parseFloat(value))}];
+    }
+    if (l_regex.test(value)) {
+        return [{"name": "ltogal", "value": lToGal(parseFloat(value))}];
     }
 
     if (!isNaN(parseFloat(value))) {
