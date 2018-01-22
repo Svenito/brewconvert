@@ -1,0 +1,23 @@
+{
+    "name": "Brew Convert",
+    "description": "Convert highlighted text to different units common for homebrewing",
+    "version": "0.1",
+    "permissions": ["contextMenus", "activeTab"],
+    "background": {
+      "persistent": false,
+      "scripts": ["background.js"]
+    },
+
+    "icons": { "16": "icons/brewvert_16.png",
+        "48": "icons/brewvert_48.png",
+       "128": "icons/brewvert_128.png" },
+
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["content-script.js"]
+        }
+    ],
+
+    "manifest_version": 2
+  }

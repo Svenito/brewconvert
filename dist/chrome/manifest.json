@@ -1,0 +1,23 @@
+{
+    "name": "Brew Convert",
+    "description": "Shows some of the features of the Context Menus API using an event page",
+    "version": "0.1",
+    "permissions": ["contextMenus", "activeTab"],
+    "background": {
+      "persistent": false,
+      "scripts": ["background.js"]
+    },
+
+    "icons": { "16": "icons/brewvert_16.png",
+        "48": "icons/brewvert_48.png",
+       "128": "icons/brewvert_128.png" },
+
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "js": ["content-script.js"]
+        }
+    ],
+
+    "manifest_version": 2
+  }

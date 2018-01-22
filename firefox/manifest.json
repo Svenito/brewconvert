@@ -2,17 +2,21 @@
 
   "manifest_version": 2,
   "name": "Brewconvert",
-  "version": "0.2",
+  "version": "0.3",
 
   "permissions": [
     "contextMenus",
     "activeTab"
   ],
 
-  "description": "Convert highlighted text to different units.",
+  "description": "Convert highlighted text to different units common for homebrewing.",
   "default_locale": "en",
   "icons": {
-    "48": "icons/border-48.png"
+    "128": "icons/brewvert_128.png",
+    "64": "icons/brewvert_64.png",
+    "48": "icons/brewvert_48.png",
+    "32": "icons/brewvert_32.png",
+    "16": "icons/brewvert_16.png"
   },
 
   "background": {
