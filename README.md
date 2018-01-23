@@ -9,7 +9,7 @@ When browsing brewing recipes I encounter pages which are entirely imperial and 
 
 ## Screenshot
 
-![screenshot](imgs/screen.png)
+![screenshot](imgs/screen.png "Screenshot")
 
 ## Install
 
