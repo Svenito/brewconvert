@@ -7,6 +7,18 @@ When browsing brewing recipes I encounter pages which are entirely imperial and 
 * kg <-> lbs
 * Celcius <-> Fahrenheit
 
-Install for:
+## Screenshot
+
+![screenshot](imgs/screen.png)
+
+## Install
+
+Brew convert is available for the following browsers:
 
 [![Firefox](imgs/firefox.png "Install for Firefox")](https://addons.mozilla.org/en-US/firefox/addon/brewconvert/)
+[![Chrome](imgs/chrome.png "Install for Chrome")](https://chrome.google.com/webstore/detail/brew-convert/jcdkojonmmoljmglhlbampboocmemhfc)
+[![Opera](imgs/opera.png "Install for Opera")](files/brewconvert_opera.nex)
+
+
+The Opera extension is awaiting approval. Until then I am hosting it here. Download it and double click to add it to Opera. Then go to extensions and install it.
+
