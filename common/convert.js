@@ -69,17 +69,17 @@ function kgToLbs(kgs)
 function convert(value) {
     value = value.trim();
 
-    kg_regex = /^\d+(\.\d+)?\s*\b(kg)|\b(kilogram)/ig;
-    lbs_regex =  /^\d+(\.\d+)?\s*\b(lbs)|\b(pounds)|(lb)/ig;
+    kg_regex = /^\d+(\.\d+)?\s*(kg)\b|(kilogram)\b/ig;
+    lbs_regex =  /^\d+(\.\d+)?\s*(lbs)\b|(pounds)\b|(lb)\b/ig;
 
-    oz_regex = /^\d+(\.\d+)?\s*\b(oz)|\b(ounce)/ig;
-    g_regex = /^\d+(\.\d+)?\s*\b(g$)|\b(gram)/ig;
+    oz_regex = /^\d+(\.\d+)?\s*(oz)\b|(ounce)\b/ig;
+    g_regex = /^\d+(\.\d+)?\s*(g$)\b|(gram)\b/ig;
 
-    c_regex = /^\d+(\.\d+)?\s*\b(c)|\b(°c)/ig;
-    f_regex = /^\d+(\.\d+)?\s*\b(f)|\b(°f)/ig;
+    c_regex = /^\d+(\.\d+)?\s*(c)\b|(°c)\b/ig;
+    f_regex = /^\d+(\.\d+)?\s*(f)\b|(°f)\b/ig;
 
-    gal_regex = /^\d+(\.\d+)?\s*\b(gal)|\b(gallon)/ig;
-    l_regex = /^\d+(\.\d+)?\s*\b(l$)|\b(litre)|\b(liter)/ig;
+    gal_regex = /^\d+(\.\d+)?\s*(gal)\b|(gallon)\b/ig;
+    l_regex = /^\d+(\.\d+)?\s*(l$)\b|(litre)\b|(liter)\b/ig;
 
     if (lbs_regex.test(value)) {
         return [{"name": "ltokg", "value": lbsToKg(parseFloat(value))}];
