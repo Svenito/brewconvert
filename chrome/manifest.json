@@ -1,7 +1,7 @@
 {
     "name": "Brew Convert",
     "description": "Convert highlighted text to different units common for homebrewing",
-    "version": "0.5",
+    "version": "0.6",
     "permissions": ["contextMenus"],
     "background": {
       "persistent": false,
