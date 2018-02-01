@@ -82,9 +82,9 @@ function lToEBC(l)
 	return message;
 }
 
-function convert(value) {
+function convert(value, conversions) {
 	value = value.trim();
-
+	console.log("conversions is ", conversions);
 	kg_regex = /^\d+(\.\d+)?\s*(kg)\b|(kilograms?)\b/ig;
 	lbs_regex =  /^\d+(\.\d+)?\s*(lbs)\b|(pounds?)\b|(lb)\b/ig;
 
@@ -101,31 +101,54 @@ function convert(value) {
 	ebc_regex = /^\d+(\.\d+)?\s*(ebc)\b/ig;
 
 	if (lbs_regex.test(value)) {
-		return [{"name": "ltokg", "value": lbsToKg(parseFloat(value))}];
+		if (conversions & 2) {
+			return [{"name": "ltokg", "value": lbsToKg(parseFloat(value))}];
+		}
+		return [];
 	}
 	if (kg_regex.test(value)) {
-		return [{"name": "kgtol", "value": kgToLbs(parseFloat(value))}];
+		if (conversions & 1) {
+			return [{"name": "kgtol", "value": kgToLbs(parseFloat(value))}];
+		}
+		return [];
 	}
 
 	if (oz_regex.test(value)) {
-		return [{"name": "oztog", "value": ozToG(parseFloat(value))}];
+		if (conversions & 2) {
+			return [{"name": "oztog", "value": ozToG(parseFloat(value))}];
+		}
+		return [];
 	}
 	if (g_regex.test(value)) {
-		return [{"name": "gtoz", "value": gToOz(parseFloat(value))}];
+		if (conversions & 1) {
+			return [{"name": "gtoz", "value": gToOz(parseFloat(value))}];
+		}return [];
 	}
 
-	if (c_regex.test(value)) {
-		return [{"name": "ctof", "value": cToF(parseFloat(value))}];
-	}
 	if (f_regex.test(value)) {
-		return [{"name": "ftoc", "value": fToC(parseFloat(value))}];
+		if (conversions & 2) {
+			return [{"name": "ftoc", "value": fToC(parseFloat(value))}];
+		}
+		return [];
+	}
+	if (c_regex.test(value)) {
+		if (conversions & 1) {
+			return [{"name": "ctof", "value": cToF(parseFloat(value))}];
+		}
+		return [];
 	}
 
 	if (gal_regex.test(value)) {
-		return [{"name": "galtol", "value": galToL(parseFloat(value))}];
+		if (conversions & 2) {
+			return [{"name": "galtol", "value": galToL(parseFloat(value))}];
+		}
+		return [];
 	}
 	if (l_regex.test(value)) {
-		return [{"name": "ltogal", "value": lToGal(parseFloat(value))}];
+		if (conversions & 1) {
+			return [{"name": "ltogal", "value": lToGal(parseFloat(value))}];
+		}
+		return [];
 	}
 
 	if (lovi_regex.test(value)) {
@@ -138,15 +161,19 @@ function convert(value) {
 	if (!isNaN(parseFloat(value))) {
 		var val = parseFloat(value);
 		var out = [];
-		console.log ("Plo");
-		out.push({"name": "galtol", "value": galToL(parseFloat(value))});
-		out.push({"name": "ltogal", "value": lToGal(parseFloat(value))});
-		out.push({"name": "ltokg", "value": lbsToKg(parseFloat(value))});
-		out.push({"name": "kgtol", "value": kgToLbs(parseFloat(value))});
-		out.push({"name": "oztog", "value": ozToG(parseFloat(value))});
-		out.push({"name": "gtoz", "value": gToOz(parseFloat(value))});
-		out.push({"name": "ctof", "value": cToF(parseFloat(value))});
-		out.push({"name": "ftoc", "value": fToC(parseFloat(value))});
+		if (conversions & 2) {
+			out.push({"name": "galtol", "value": galToL(parseFloat(value))});
+			out.push({"name": "oztog", "value": ozToG(parseFloat(value))});
+			out.push({"name": "ltokg", "value": lbsToKg(parseFloat(value))});
+			out.push({"name": "ftoc", "value": fToC(parseFloat(value))});
+		}
+		if (conversions & 1) {
+			out.push({"name": "ltogal", "value": lToGal(parseFloat(value))});
+			out.push({"name": "kgtol", "value": kgToLbs(parseFloat(value))});
+			out.push({"name": "gtoz", "value": gToOz(parseFloat(value))});
+			out.push({"name": "ctof", "value": cToF(parseFloat(value))});
+		}
+
 		out.push({"name": "ltoebc", "value": lToEBC(parseFloat(value))});
 		out.push({"name": "ebctol", "value": ebcToL(parseFloat(value))});
 		return out;

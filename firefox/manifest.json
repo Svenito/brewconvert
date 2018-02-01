@@ -1,30 +1,36 @@
 {
-
-  "manifest_version": 2,
-  "name": "Brewconvert",
-  "version": "0.6",
-
-  "permissions": [
-    "contextMenus"
-  ],
-
-  "description": "Convert highlighted text to different units common for homebrewing.",
-  "default_locale": "en",
-  "icons": {
-    "128": "icons/brewvert_128.png",
-    "64": "icons/brewvert_64.png",
-    "48": "icons/brewvert_48.png",
-    "32": "icons/brewvert_32.png",
-    "16": "icons/brewvert_16.png"
-  },
-
-  "background": {
-    "scripts": ["background.js"]
-  },
-
-  "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "js": ["content-script.js"]
-}]
-
+	"manifest_version": 2,
+	"name": "Brew Convert",
+	"version": "0.7",
+	"permissions": [
+		"contextMenus",
+		"storage"
+	],
+	"description": "Convert highlighted text to different units common for homebrewing.",
+	"default_locale": "en",
+	"icons": {
+		"128": "icons/brewvert_128.png",
+		"64": "icons/brewvert_64.png",
+		"48": "icons/brewvert_48.png",
+		"32": "icons/brewvert_32.png",
+		"16": "icons/brewvert_16.png"
+	},
+	"background": {
+		"scripts": [
+			"background.js"
+		]
+	},
+	"options_ui": {
+		"page": "options.html"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"content-script.js"
+			]
+		}
+	]
 }
