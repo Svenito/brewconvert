@@ -91,8 +91,8 @@ function convert(value, conversions) {
 	oz_regex = /^\d+(\.\d+)?\s*(oz)\b|(ounces?)\b/ig;
 	g_regex = /^\d+(\.\d+)?\s*(g$)\b|(grams?)\b/ig;
 
-	c_regex = /^\d+(\.\d+)?\s*(c)\b|(°c)\b/ig;
-	f_regex = /^\d+(\.\d+)?\s*(f)\b|(°f)\b/ig;
+	c_regex = /^\d+(\.\d+)?\s*(c)\b|(°\s?c)\b/ig;
+	f_regex = /^\d+(\.\d+)?\s*(f)\b|(°\s?f)\b/ig;
 
 	gal_regex = /^\d+(\.\d+)?\s*(gal(lon)?s?)\b/ig;
 	l_regex = /^\d+(\.\d+)?\s*(l$)\b|(litres?)\b|(liters?)\b/ig;
