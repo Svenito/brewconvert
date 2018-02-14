@@ -2,86 +2,77 @@
 
 // will be appended to the background scripts
 
+function unitConvert(values, op)
+{
+	if (!Array.isArray(values) || values[1] == undefined) {
+		return [op(values[2]).toFixed(3)];
+	} else {
+		return [op(values[1]).toFixed(3), op(values[2]).toFixed(3)];
+	}
+}
+
+function makeMessage(source, conv, from_unit, to_unit) {
+	var message = ""
+
+	if (conv[1] != undefined) {
+		message += source[1] + '-';
+	}
+	message += source[2];
+	message += from_unit + ' -> ';
+	message += conv[0];
+	if (conv[1]) {
+		message += '-' + conv[1];
+	}
+	message += to_unit;
+	return message;
+}
+
 function cToF(celsius)
 {
-	var message = "";
-	if (!Array.isArray(celsius) || celsius[1] == undefined) {
-		var cTemp = parseFloat(celsius);
-		var cToFahr = cTemp * 9 / 5 + 32;
-		var message = cTemp + '\xB0C -> ' + cToFahr.toFixed(3) + ' \xB0F';
-	} else {
-		var cTemp1 = celsius[1];
-		var cTemp2 = celsius[2];
-		var cToF1 = cTemp1 * 9 / 5 + 32;
-		var cToF2 = cTemp2 * 9 / 5 + 32;
-		message = cTemp1 + '-' + cTemp2 + '\xB0C -> ' + cToF1.toFixed(3) + '-' + cToF2.toFixed(3) + '\xB0F';
-	}
-	return message;
+	x = unitConvert(celsius, function(a){return a * 9 / 5 + 32;});
+	return makeMessage(celsius, x, '\xB0C', '\xB0F');
 }
 
 function fToC(fahrenheit)
 {
-	var message = "";
-	if (!Array.isArray(fahrenheit) || fahrenheit[1] == undefined) {
-		var fTemp = parseFloat(fahrenheit);
-		var fToCel = (fTemp - 32) * 5 / 9;
-		message = fTemp + '\xB0F -> ' + fToCel.toFixed(3) + '\xB0C';
-	} else {
-		var fTemp1 = fahrenheit[1];
-		var fTemp2 = fahrenheit[2];
-		var fToCel1 = (fTemp1 - 32) * 5 / 9;
-		var fToCel2 = (fTemp2 - 32) * 5 / 9;
-		message = fTemp1 + '-' + fTemp2 + '\xB0F -> ' + fToCel1.toFixed(3) + '-' + fToCel2.toFixed(3) + '\xB0C';
-	}
-	return message;
+	x = unitConvert(fahrenheit, function(a){return (a - 32) * 5 / 9;});
+	return makeMessage(fahrenheit, x, '\xB0F', '\xB0C');
 }
 
 function galToL(gallons)
 {
-	var gal = gallons;
-	var liters = gallons * 3.7854;
-	var message = gal+' gal(US) -> ' + liters.toFixed(3) + ' l';
-	return message;
+	x = unitConvert(gallons, function(a){return a * 3.7854;});
+	return makeMessage(gallons, x, 'gal(US)', ' l');
 }
 
 function lToGal(liters)
 {
-	var l = liters;
-	var gal = liters / 3.7854;
-	var message = l + ' l -> ' + gal.toFixed(3) + ' gal(US)';
-	return message;
+	x = unitConvert(liters, function(a){return a / 3.7854;});
+	return makeMessage(liters, x, ' l', ' gal(US)');
 }
 
 function gToOz(grams)
 {
-	var g = grams;
-	var oz = grams / 28.34952;
-	var message = grams + ' g -> ' + oz.toFixed(3) + ' oz';
-	return message;
+	x = unitConvert(grams, function(a){return a / 28.34952;});
+	return makeMessage(grams, x, ' g', ' oz');
 }
 
 function ozToG(ounces)
 {
-	var oz = ounces;
-	var g = oz * 28.34952;
-	var message = oz + ' oz -> ' + g.toFixed(3) + ' g';
-	return message;
+	x = unitConvert(ounces, function(a){return a * 28.34952;});
+	return makeMessage(ounces, x, ' oz', ' g');
 }
 
 function lbsToKg(pounds)
 {
-	var lbs = pounds;
-	var kg = lbs / 2.204623;
-	var message = lbs + ' lbs -> ' + kg.toFixed(3) + ' kg';
-	return message;
+	x = unitConvert(pounds, function(a){return a / 2.204623;});
+	return makeMessage(pounds, x, ' lbs', ' kg');
 }
 
 function kgToLbs(kgs)
 {
-	var kilos = kgs;
-	var lbs = kilos * 2.204623;
-	var message = kilos + ' kg -> ' + lbs.toFixed(3) + ' lbs';
-	return message;
+	x = unitConvert(kgs, function(a){return a * 2.204623;});
+	return makeMessage(kgs, x, ' kg', ' lbs');
 }
 
 function ebcToL(ebc)
@@ -101,59 +92,63 @@ function lToEBC(l)
 }
 
 function convert(value, conversions) {
-	value = value.trim();
-	kg_regex = /^(\d+\.?\d+)*\s?-?\s?(\d+(\.\d+)?)\s*(kg)\b|(kilograms?)\b/ig;
-	lbs_regex =  /^\d+(\.\d+)?\s*(lbs)\b|(pounds?)\b|(lb)\b/ig;
+	//value = value.trim();
+	number_regex = /^(?:([\d\.]+)\s?[-–]\s?)?([\d\.]+)\s*/ig;
 
-	oz_regex = /^\d+(\.\d+)?\s*(oz)\b|(ounces?)\b/ig;
-	g_regex = /^\d+(\.\d+)?\s*(g$)\b|(grams?)\b/ig;
+	kg_regex = /(kg)\b|(kilo(gram)?s?)$/ig;
+	lbs_regex = /(lbs?)\b|(pounds?)\b$/ig;
 
-	c_regex = /^(?:([\d\.]+)\s?[-–]\s?)?([\d\.]+)\s*(?:°\s?c|c)\b/ig;
-	f_regex = /^(?:([\d\.]+)\s?[-–]\s?)?([\d\.]+)\s*(?:°\s?f|f)\b/ig;
+	oz_regex = /(oz)\b|(ounces?)\b$/ig;
+	g_regex = /(g$)\b|(grams?)\b$/ig;
 
-	gal_regex = /^\d+(\.\d+)?\s*(gal(lon)?s?)\b/ig;
-	l_regex = /^\d+(\.\d+)?\s*(l$)\b|(litres?)\b|(liters?)\b/ig;
+	c_regex = /(?:°\s?c|c)$/ig;
+	f_regex = /(?:°\s?f|f)$/ig;
+
+	gal_regex = /(gal(lon)?s?)\b$/ig;
+	l_regex = /(l$)\b|(litres?)\b|(liters?)\b$/ig;
 
 	lovi_regex = /^\d+(\.\d+)?\s*(lovibond)\b|(°l)\b/ig;
 	ebc_regex = /^\d+(\.\d+)?\s*(ebc)\b/ig;
 
 	if (lbs_regex.test(value)) {
-
+		match = number_regex.exec(value);
 		if (conversions & 2) {
-			return [{"name": "ltokg", "value": lbsToKg(parseFloat(value))}];
+			return [{"name": "ltokg", "value": lbsToKg(match)}];
 		}
 		return [];
 	}
 	if (kg_regex.test(value)) {
+		match = number_regex.exec(value);
 		if (conversions & 1) {
-			return [{"name": "kgtol", "value": kgToLbs(parseFloat(value))}];
+			return [{"name": "kgtol", "value": kgToLbs(match)}];
 		}
 		return [];
 	}
 
 	if (oz_regex.test(value)) {
+		match = number_regex.exec(value);
 		if (conversions & 2) {
-			return [{"name": "oztog", "value": ozToG(parseFloat(value))}];
+			return [{"name": "oztog", "value": ozToG(match)}];
 		}
 		return [];
 	}
 	if (g_regex.test(value)) {
+		match = number_regex.exec(value);
 		if (conversions & 1) {
-			return [{"name": "gtoz", "value": gToOz(parseFloat(value))}];
-		}return [];
+			return [{"name": "gtoz", "value": gToOz(match)}];
+		}
+		return [];
 	}
 
 	if (f_regex.test(value)) {
-		match = value.match(f_regex);
-		match = f_regex.exec(value);
+		match = number_regex.exec(value);
 		if (conversions & 2) {
 			return [{"name": "ftoc", "value": fToC(match)}];
 		}
 		return [];
 	}
 	if (c_regex.test(value)) {
-		match = value.match(c_regex);
-		match = c_regex.exec(value);
+		match = number_regex.exec(value);
 		if (conversions & 1) {
 			return [{"name": "ctof", "value": cToF(match)}];
 		}
@@ -161,14 +156,16 @@ function convert(value, conversions) {
 	}
 
 	if (gal_regex.test(value)) {
+		match = number_regex.exec(value);
 		if (conversions & 2) {
-			return [{"name": "galtol", "value": galToL(parseFloat(value))}];
+			return [{"name": "galtol", "value": galToL(match)}];
 		}
 		return [];
 	}
 	if (l_regex.test(value)) {
+		match = number_regex.exec(value);
 		if (conversions & 1) {
-			return [{"name": "ltogal", "value": lToGal(parseFloat(value))}];
+			return [{"name": "ltogal", "value": lToGal(match)}];
 		}
 		return [];
 	}
@@ -181,19 +178,19 @@ function convert(value, conversions) {
 	}
 
 	if (!isNaN(parseFloat(value))) {
-		var val = parseFloat(value);
+		var val = number_regex.exec(value);
 		var out = [];
 		if (conversions & 2) {
-			out.push({"name": "galtol", "value": galToL(parseFloat(value))});
-			out.push({"name": "oztog", "value": ozToG(parseFloat(value))});
-			out.push({"name": "ltokg", "value": lbsToKg(parseFloat(value))});
-			out.push({"name": "ftoc", "value": fToC(parseFloat(value))});
+			out.push({"name": "galtol", "value": galToL(val)});
+			out.push({"name": "oztog", "value": ozToG(val)});
+			out.push({"name": "ltokg", "value": lbsToKg(val)});
+			out.push({"name": "ftoc", "value": fToC(val)});
 		}
 		if (conversions & 1) {
-			out.push({"name": "ltogal", "value": lToGal(parseFloat(value))});
-			out.push({"name": "kgtol", "value": kgToLbs(parseFloat(value))});
-			out.push({"name": "gtoz", "value": gToOz(parseFloat(value))});
-			out.push({"name": "ctof", "value": cToF(parseFloat(value))});
+			out.push({"name": "ltogal", "value": lToGal(val)});
+			out.push({"name": "kgtol", "value": kgToLbs(val)});
+			out.push({"name": "gtoz", "value": gToOz(val)});
+			out.push({"name": "ctof", "value": cToF(val)});
 		}
 
 		out.push({"name": "ltoebc", "value": lToEBC(parseFloat(value))});
