@@ -12,7 +12,7 @@ function notify(x) {
 	var getting = browser.storage.local.get("conversions");
 	getting.then(function(data) {
 		browser.contextMenus.removeAll();
-		var conversions = 0;
+		var conversions = 3;
 		if (data.conversions) {
 			conversions = parseInt(data.conversions);
 		}

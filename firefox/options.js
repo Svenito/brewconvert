@@ -11,7 +11,7 @@ function saveOptions(e) {
 function restoreOptions() {
 
 	function setCurrentChoice(result) {
-		document.getElementById("conversions").value = result.conversions || "3";
+		document.getElementById("conversions").value = result.conversions || 3;
 	}
 
 	function onError(error) {

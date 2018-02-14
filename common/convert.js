@@ -4,17 +4,35 @@
 
 function cToF(celsius)
 {
-	var cTemp = celsius;
-	var cToFahr = cTemp * 9 / 5 + 32;
-	var message = cTemp + '\xB0C -> ' + cToFahr.toFixed(3) + ' \xB0F';
+	var message = "";
+	if (!Array.isArray(celsius) || celsius[1] == undefined) {
+		var cTemp = parseFloat(celsius);
+		var cToFahr = cTemp * 9 / 5 + 32;
+		var message = cTemp + '\xB0C -> ' + cToFahr.toFixed(3) + ' \xB0F';
+	} else {
+		var cTemp1 = celsius[1];
+		var cTemp2 = celsius[2];
+		var cToF1 = cTemp1 * 9 / 5 + 32;
+		var cToF2 = cTemp2 * 9 / 5 + 32;
+		message = cTemp1 + '-' + cTemp2 + '\xB0C -> ' + cToF1.toFixed(3) + '-' + cToF2.toFixed(3) + '\xB0F';
+	}
 	return message;
 }
 
 function fToC(fahrenheit)
 {
-	var fTemp = fahrenheit;
-	var fToCel = (fTemp - 32) * 5 / 9;
-	var message = fTemp + '\xB0F -> ' + fToCel.toFixed(3) + '\xB0C';
+	var message = "";
+	if (!Array.isArray(fahrenheit) || fahrenheit[1] == undefined) {
+		var fTemp = parseFloat(fahrenheit);
+		var fToCel = (fTemp - 32) * 5 / 9;
+		message = fTemp + '\xB0F -> ' + fToCel.toFixed(3) + '\xB0C';
+	} else {
+		var fTemp1 = fahrenheit[1];
+		var fTemp2 = fahrenheit[2];
+		var fToCel1 = (fTemp1 - 32) * 5 / 9;
+		var fToCel2 = (fTemp2 - 32) * 5 / 9;
+		message = fTemp1 + '-' + fTemp2 + '\xB0F -> ' + fToCel1.toFixed(3) + '-' + fToCel2.toFixed(3) + '\xB0C';
+	}
 	return message;
 }
 
@@ -84,15 +102,15 @@ function lToEBC(l)
 
 function convert(value, conversions) {
 	value = value.trim();
-	console.log("conversions is ", conversions);
-	kg_regex = /^\d+(\.\d+)?\s*(kg)\b|(kilograms?)\b/ig;
+	console.log("conversions is ",  value);
+	kg_regex = /^(\d+\.?\d+)*\s?-?\s?(\d+(\.\d+)?)\s*(kg)\b|(kilograms?)\b/ig;
 	lbs_regex =  /^\d+(\.\d+)?\s*(lbs)\b|(pounds?)\b|(lb)\b/ig;
 
 	oz_regex = /^\d+(\.\d+)?\s*(oz)\b|(ounces?)\b/ig;
 	g_regex = /^\d+(\.\d+)?\s*(g$)\b|(grams?)\b/ig;
 
-	c_regex = /^\d+(\.\d+)?\s*(c)\b|(°c)\b/ig;
-	f_regex = /^\d+(\.\d+)?\s*(f)\b|(°f)\b/ig;
+	c_regex = /^(?:([\d\.]+)\s?-\s?)?([\d\.]+)\s*(?:°\s?c|c)\b/ig;
+	f_regex = /^(?:([\d\.]+)\s?-\s?)?([\d\.]+)\s*(?:°\s?f|f)\b/ig;
 
 	gal_regex = /^\d+(\.\d+)?\s*(gal(lon)?s?)\b/ig;
 	l_regex = /^\d+(\.\d+)?\s*(l$)\b|(litres?)\b|(liters?)\b/ig;
@@ -101,6 +119,7 @@ function convert(value, conversions) {
 	ebc_regex = /^\d+(\.\d+)?\s*(ebc)\b/ig;
 
 	if (lbs_regex.test(value)) {
+
 		if (conversions & 2) {
 			return [{"name": "ltokg", "value": lbsToKg(parseFloat(value))}];
 		}
@@ -126,14 +145,18 @@ function convert(value, conversions) {
 	}
 
 	if (f_regex.test(value)) {
+		match = value.match(f_regex);
+		match = f_regex.exec(value);
 		if (conversions & 2) {
-			return [{"name": "ftoc", "value": fToC(parseFloat(value))}];
+			return [{"name": "ftoc", "value": fToC(match)}];
 		}
 		return [];
 	}
 	if (c_regex.test(value)) {
+		match = value.match(c_regex);
+		match = c_regex.exec(value);
 		if (conversions & 1) {
-			return [{"name": "ctof", "value": cToF(parseFloat(value))}];
+			return [{"name": "ctof", "value": cToF(match)}];
 		}
 		return [];
 	}
