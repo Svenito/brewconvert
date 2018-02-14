@@ -102,15 +102,14 @@ function lToEBC(l)
 
 function convert(value, conversions) {
 	value = value.trim();
-	console.log("conversions is ",  value);
 	kg_regex = /^(\d+\.?\d+)*\s?-?\s?(\d+(\.\d+)?)\s*(kg)\b|(kilograms?)\b/ig;
 	lbs_regex =  /^\d+(\.\d+)?\s*(lbs)\b|(pounds?)\b|(lb)\b/ig;
 
 	oz_regex = /^\d+(\.\d+)?\s*(oz)\b|(ounces?)\b/ig;
 	g_regex = /^\d+(\.\d+)?\s*(g$)\b|(grams?)\b/ig;
 
-	c_regex = /^(?:([\d\.]+)\s?-\s?)?([\d\.]+)\s*(?:°\s?c|c)\b/ig;
-	f_regex = /^(?:([\d\.]+)\s?-\s?)?([\d\.]+)\s*(?:°\s?f|f)\b/ig;
+	c_regex = /^(?:([\d\.]+)\s?[-–]\s?)?([\d\.]+)\s*(?:°\s?c|c)\b/ig;
+	f_regex = /^(?:([\d\.]+)\s?[-–]\s?)?([\d\.]+)\s*(?:°\s?f|f)\b/ig;
 
 	gal_regex = /^\d+(\.\d+)?\s*(gal(lon)?s?)\b/ig;
 	l_regex = /^\d+(\.\d+)?\s*(l$)\b|(litres?)\b|(liters?)\b/ig;
