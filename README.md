@@ -21,5 +21,6 @@ Brew convert is available for the following browsers:
 [![Opera](imgs/opera.png "Install for Opera")](files/brewconvert_opera.nex)
 
 
-The Opera extension is awaiting approval. Until then I am hosting it here. Download it and double click to add it to Opera. Then go to extensions and install it.
+The Opera extension is awaiting approval. Until then I am hosting it here. Download it by clicking the icon above and double click to add it to Opera. Then go to extensions and install it.
 
+[View project on Github](https://github.com/Svenito/brewconvert)
